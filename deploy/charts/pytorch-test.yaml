@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ray-test-job
+  namespace: ray
+spec:
+  template:
+    spec:
+      schedulerName: kubeflux
+      restartPolicy: Never
+      containers:
+        - name: ray
+          image: milroy1/ray-testing:ray-pytorch
+          imagePullPolicy: Always
+          command: [ "/bin/bash", "-c", "--" ]
+          args:
+            - python3 pytorch_test.py --address ray://example-cluster-ray-head:10001 --num-workers 16 
+          resources:
+            requests:
+              cpu: 2 
+              memory: 4Gi
+            limits:
+              cpu: 2
+              memory: 4Gi

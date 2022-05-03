@@ -31,6 +31,7 @@ spec:
         metadata:
           generateName: {{ kebabcase $key }}-
         spec:
+          schedulerName: {{ $val.schedulerName | default "default-scheduler" }}
           restartPolicy: Never
           # This volume allocates shared memory for Ray to use for its plasma
           # object store. If you do not provide this, Ray will fall back to
